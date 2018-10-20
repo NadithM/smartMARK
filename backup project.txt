@@ -8,7 +8,6 @@
 
 File EnumbersFile,DateFile,CourseNumberFile,AttendenceFile,LectureHoursFile;
 
-
 uint8_t getFingerprintEnroll(int enumber);
 int getFingerprintIDez();
 char readchar();
@@ -17,7 +16,6 @@ uint8_t deleteFingerprint(uint8_t id);
 void putid(int enumber);
 void saveAttendence(int attendence);
 void getID(int input);
-
 
 LiquidCrystal lcd(12, 13, 5, 4, 3, 2);
 SoftwareSerial mySerial(10,11);
@@ -35,8 +33,6 @@ boolean enrollmentsetup=true,fingersetup=true,finshedenroll=true,
     
 String enumberfound="",idfound="",enumid="",temp6="";
  String dataStr;
-
-
 
 const int chipSelect = 53;//SD card 
 
@@ -68,8 +64,7 @@ void getID(int input){
   String names=String();
 
   names += input;
-
-  
+ 
   //SDsetup();
   EnumbersFile = SD.open("Enumbers.txt");
   if (EnumbersFile) {
@@ -101,8 +96,7 @@ void getID(int input){
     // if the file didn't open, print an error:
       //Serial.println("error opening enumbers.txt");
     }
-   
-  
+     
 }
 void getenum(uint8_t input){
    enumberfound="";
@@ -110,7 +104,6 @@ void getenum(uint8_t input){
   String names=String();
 
   names += input;
-
   
   //SDsetup();
   EnumbersFile = SD.open("Enumbers.txt");
@@ -142,11 +135,8 @@ void getenum(uint8_t input){
     else {;
     // if the file didn't open, print an error:
       //Serial.println("error opening enumbers.txt");
-    }
-   
-  
+    }  
 }
-
 
 uint8_t deleteFingerprint(uint8_t id) {
   uint8_t p = -1;
@@ -194,7 +184,6 @@ void putid(int enumber){
     Serial.println(dataString);
 }
 
-
 void saveAttendence(int attendence){
    String dataString = String();
    String datestr;
@@ -215,7 +204,6 @@ void saveAttendence(int attendence){
       //Serial.println("error opening enumbers.txt");
     }
 
-
     //.........................................................................
       CourseNumberFile = SD.open("course.txt");
    if (CourseNumberFile) {
@@ -231,8 +219,6 @@ void saveAttendence(int attendence){
     // if the file didn't open, print an error:
       //Serial.println("error opening enumbers.txt");
     }
-
-
     //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
     LectureHoursFile = SD.open("hours.txt");
@@ -250,7 +236,6 @@ void saveAttendence(int attendence){
       //Serial.println("error opening enumbers.txt");
     }
 
-   
    dataString +=  Date;
    dataString +=  ",";
    dataString += CourseNumber;
@@ -260,8 +245,7 @@ void saveAttendence(int attendence){
    dataString +=  temp3;
    dataString +=  ",";
    dataString +=  attendence;
-
-
+   
    AttendenceFile = SD.open("marked.txt", FILE_WRITE);
     // if the file is available, write to it:
     if (AttendenceFile) {
@@ -275,7 +259,6 @@ void saveAttendence(int attendence){
     }
    Serial.println(dataString);
 }
-
 
 void reset(){
   if(EEPROM.read(resetstate) == 1){
@@ -297,8 +280,6 @@ void reset(){
         state='D';
     }     
 }
-
-
 
 void lcdprint(String name){
   lcd.clear();
@@ -349,7 +330,6 @@ int readnumberint(){
       }
     }
 }
-
 
 uint32_t readDate(){
   uint32_t numD = 0;
@@ -591,7 +571,6 @@ uint8_t getFingerprintEnroll(int enumber) {
 }
 // initialize the library with the numbers of the interface pins
 
-
 uint8_t getFingerprintID() {
  int p = -1;
  delay(2000);
@@ -684,7 +663,6 @@ int getFingerprintIDez() {
    
     return finger.fingerID; 
 }
-
       
 void Enrollmentloop() {
   Mainsetup();
@@ -719,7 +697,6 @@ void Enrollmentloop() {
     Serial.print("else end ");
   }
 
-
    Serial.print("function end");
 }
 
@@ -739,10 +716,7 @@ if(enumberfound!=""){
     lcd.print("Is Marked ");
   
     lcd.print(temp3);
-    saveAttendence(1);
-    
-    
-    
+    saveAttendence(1);    
     }
 
     else{
@@ -750,8 +724,6 @@ if(enumberfound!=""){
       
       }
     delay(2000);
-
-   
 }
 
 void putZero(){
@@ -763,8 +735,7 @@ void putZero(){
              String linetext=AttendenceFile.readStringUntil('\n');
               temp6=linetext.substring(0, 5);
               int temp9=temp6.toInt();
-            
-            
+           
               AttendenceFile = SD.open("marked.txt");
                if (AttendenceFile) {
                while (AttendenceFile.available()) {
@@ -779,8 +750,7 @@ void putZero(){
                         enumid=temp7;
                 
                         break;
-                   }
-            
+                   } 
              }
              
           int temp12=enumid.toInt();
@@ -788,19 +758,13 @@ void putZero(){
             
            temp3=temp12;
            saveAttendence(0);
-            
-            
-            
+ 
             }
           AttendenceFile.close();
           }
           else {;
               //
           }
-
-
-
-
       }      
        EnumbersFile.close();       
     }
@@ -811,11 +775,6 @@ void putZero(){
       issuccess=false;
       
     }
-  
-
- 
-  
-  
 }
 
 char readchar(){
@@ -857,7 +816,6 @@ void setup() {
   while(1){
       switch(state){
 
-
         case '1':
           lcdprint("SET COURSE NUMBER:");
           CourseNumber=readnumberint();
@@ -875,7 +833,6 @@ void setup() {
               lcdprint("ERROR OPENING Course_Now.txt");
               state='D';
           }
-
           
          // Serial.println("grfgdgdfgdg");
          // Serial.println(dataStr);
@@ -884,7 +841,6 @@ void setup() {
          
           break;
           
-
         case '2':
           lcdprint("SET LECTURE HOURS");
           
@@ -971,7 +927,6 @@ void setup() {
          
         break;
 
-
       case 'A':
             lcd.clear();
             lcd.print("USER ENROLLMENT ");
@@ -998,7 +953,6 @@ void setup() {
             Fingerloop();
             
           break;
-
     
         case 'C':
         lcdprint("RESET MODE");
@@ -1014,8 +968,7 @@ void setup() {
         getID(id8);
         temp4=idfound.toInt();
         deleteFingerprint(temp4);
-        
-         
+                 
       break;
 
        case '6':
@@ -1028,12 +981,7 @@ void setup() {
          lcd.print("Success...");
 
        break;
-
-     
-
-        
-    
- 
+       
         default:
           lcd.clear();
         lcdprint("HELLO I'M READY");
@@ -1044,12 +992,7 @@ void setup() {
   }
 }
 
-
-
 void loop() {
-
-
-
 }
 
 
